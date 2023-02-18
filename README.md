@@ -3,7 +3,7 @@
 
 ## Plan 
 
-- Bevy Skeleton (fast compile)
+- wasm target (switchable)
 
 - CPP interop
 
@@ -18,4 +18,6 @@
 
 
 ### (done)
+
+- Bevy Skeleton (fast compile)
 
