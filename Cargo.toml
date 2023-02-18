@@ -6,8 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy = { version = "0.9.1", features = ["dynamic"] }
-#NOTE: Remember to revert "dynamic" before releasing your game! Otherwise you will need to include libbevy_dylib alongside your game if you want it to run. If you remove the "dynamic" feature, your game executable can run standalone.
+bevy = { version = "0.9" }#, features = ["dynamic"] } # NOTE NOTE feature dynamic increses compile time but doesnt work with web target → add back when deving on native
+# NOTE: for native wayland support later: features = ["wayland"]  [@https://bevy-cheatbook.github.io/platforms/linux.html]
+# NOTE: Remember to remove "dynamic" before releasing your game! Otherwise you will need to include libbevy_dylib alongside your game if you want it to run. If you remove the "dynamic" feature, your game executable can run standalone.
+console_error_panic_hook = "0.1"
 
 [workspace]
 resolver = "2" # Important! wgpu/Bevy needs this!

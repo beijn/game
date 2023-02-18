@@ -39,14 +39,18 @@ fn greet_people(time: Res<Time>, mut timer: ResMut<GreetTimer>, query: Query<&Na
 
 
 fn main() {
+    // from https://bevy-cheatbook.github.io/platforms/wasm/panic-console.html; to use with
+    // crate console_error_panic_hook: When building for WASM, print panics to the browser console
+    #[cfg(target_arch = "wasm32")] console_error_panic_hook::set_once();
+
     App::new()
         .add_plugins(DefaultPlugins)
         .add_plugin(HelloPlugin)
-        .add_startup_system(setup)
+      //  .add_startup_system(setup)
         .run();
 }
 
-
+/*
 // from https://github.com/bevyengine/bevy/blob/latest/examples/2d/mesh2d.rs
 fn setup(
     mut commands: Commands,
@@ -61,3 +65,4 @@ fn setup(
         ..default()
     });
 }
+*/
