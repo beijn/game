@@ -7,7 +7,7 @@ echo "\033[32;1m   == ===  Deploying the game  === ==   \033[0m"
 #wasm-bindgen --out-dir ./gh-pages/target --target web ./target/wasm32-unknown-unknown/release/game.wasm
 wasm-pack build --target web --out-dir ./gh-pages/target --release
 
-#TODO commit main
+#TODO commit main  / do this after commit
 
 git subtree push --prefix gh-pages origin gh-pages
 

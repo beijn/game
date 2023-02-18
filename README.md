@@ -3,21 +3,27 @@
 
 ## Plan 
 
-- wasm target (switchable)
+- CI/CD compile + deploy to gh-pages (else I would need to add ./gh-pages/target/* to the main branch...)
 
-- CPP interop
+- bevy to web (ecs)
+
+- bevy draw something on the web
+
+- c++ interop
 
 - Visor interop
 
-- Draw B/W Visibility polygon (static)
+- draw b/w visibility polygon (static)
 
 
 ### (long term)
 
-- make portable
+- make c++ part portable
 
 
 ### (done)
 
-- Bevy Skeleton (fast compile)
+- gh-pages wasm minimal demo
+- wasm compilation and interop
+- bevy skeleton (fast compile)
 
