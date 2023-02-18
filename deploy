@@ -1,0 +1,12 @@
+#!/bin/zsh
+
+echo "\033[32;1m   == ===  Deploying the game  === ==   \033[0m"
+#cargo run #--target wasm32-unknown-unknown  ##play
+
+cargo build --target wasm32-unknown-unknown #--release 
+
+wasm-bindgen --out-dir ./gh-pages/target --target web ./target/wasm32-unknown-unknown/release/game.wasm
+
+git subtree push --prefix gh-pages origin gh-pages
+
+

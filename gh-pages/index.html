@@ -1,12 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8">
-    <title>Juhu!</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <title>Demo</title>
   </head>
   <body>
-    ...Content...
+    <script type="module">
+      import init, { add } from './target/game.js';
+
+      async function run() {
+        var res = await init();
+        res.start();
+
+        console.log('started');
+      }
+
+      run();
+    </script>
   </body>
 </html>

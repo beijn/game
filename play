@@ -1,6 +1,0 @@
-#!/bin/zsh
-
-echo "\033[32;1m   == ===  Running the game  === ==   \033[0m"
-
-cargo run --target wasm32-unknown-unknown
- 
