@@ -10,6 +10,7 @@ bevy = { version = "0.9" }#, features = ["dynamic"] } # NOTE NOTE feature dynami
 # NOTE: for native wayland support later: features = ["wayland"]  [@https://bevy-cheatbook.github.io/platforms/linux.html]
 # NOTE: Remember to remove "dynamic" before releasing your game! Otherwise you will need to include libbevy_dylib alongside your game if you want it to run. If you remove the "dynamic" feature, your game executable can run standalone.
 console_error_panic_hook = "0.1"
+wasm-bindgen = "0.2.84"  # NOTE REMOVE when not explocitely using wasm interop?  [@wasm-bindgen]
 
 [workspace]
 resolver = "2" # Important! wgpu/Bevy needs this!
@@ -27,3 +28,19 @@ lto = "thin"
 
 #[toolchain]
 #channel = "nightly"
+
+
+
+# NOTE REMOVE when not explocitely using wasm interop? [@wasm-bindgen]
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies.web-sys]
+version = "0.3.4"
+features = [
+  'Document',
+  'Element',
+  'HtmlElement',
+  'Node',
+  'Window',
+]
