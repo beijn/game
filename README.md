@@ -2,6 +2,12 @@
 
 
 ## Plan 
+ 
+- **fix missing of target/ in gh-pages**
+
+- *fix unnecessary docker build activity*
+  [ ] fix unspecified COPY
+  [ ] info: installing component 'rust-std' for 'wasm32-unknown-unknown'
 
 - CI/CD compile + deploy to gh-pages (else I would need to add ./gh-pages/target/* to the main branch...)
 
@@ -23,6 +29,7 @@
 
 ### (done)
 
+- efficient docker caching (lots of redundant approaches it seems)
 - gh-pages wasm minimal demo
 - wasm compilation and interop
 - bevy skeleton (fast compile)
