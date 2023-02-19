@@ -1,0 +1,16 @@
+
+name: Build Game Container
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-push-container:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run: |
+        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u beijn --password-stdin
+        docker build . -f ./Dockerfile -t ghcr.io/beijn/game-builder
+        docker push ghcr.io/beijn/game-builder
+
