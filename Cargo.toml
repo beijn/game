@@ -30,8 +30,7 @@ lto = "thin"
 #channel = "nightly"
 
 
-
-# NOTE REMOVE when not explocitely using wasm interop? [@wasm-bindgen]
+# NOTE REMOVE when not explocitely using wasm interop? [@wasm-bindgen] → probable do multiple targets / crates, one of which is a wasm/js library for a website
 [lib]
 crate-type = ["cdylib"]
 

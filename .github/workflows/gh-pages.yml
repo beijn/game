@@ -1,31 +1,31 @@
-name: Build GitHub Pages
-on: 
-  workflow_run:
-    workflows: [ Build Game Container ]
-    types:          [ completed ]
+name: gh-pages
+on:
+  push:
+    branches: [ main ]
 env: 
-  image: ghcr.io/beijn/game-builder:wasm
+  builder: ghcr.io/beijn/game-builder:wasm32-unknown-unknown
 jobs: 
   build:
     runs-on: ubuntu-latest
     steps: 
     - uses: actions/checkout@v3
 
-    - name: Extract wasm packed for gh-pages from container
+    - name: Build and extract wasm packed for gh-pages from container
       run: |
-        #export DOCKER_BUILDKIT=1
+        export DOCKER_BUILDKIT=1
         echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        #docker pull $image || :
-        docker build . -f ./Dockerfile --cache-from $image --target export-gh-pages --output gh-pages  --progress=plain #DEBUG enable stdout # --rm=false   
+        docker run -v `pwd`:/build -w /build $builder ls -a
+        #wasm-pack build --target web --out-dir gh-pages/target --release
+        # this is 'like' copying the source into the container
 
     - name: Init new dummy repo for gh-pages
       run: |
         cd gh-pages
         git init         
-        git config --local user.email "action@github.com"
+        git config --local user.email "action@github.com" 
         git config --local user.name "GitHub Action"
         git add -A
-        git commit -m 'deploy'
+        git commit -m 'update gp-pages'
 
     - name: Force push to gh-pages branch
       # see https://medium.com/@danieljimgarcia/publishing-static-sites-to-github-pages-using-github-actions-8040f57dfeaf
