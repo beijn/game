@@ -8,24 +8,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps: 
-    - uses: actions/checkout@v3
 
     - name: Build and extract wasm packed for gh-pages from container
       run: |
-        export DOCKER_BUILDKIT=1
         echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        docker run -v `pwd`:/build -w /build $builder ls -a
-        #wasm-pack build --target web --out-dir gh-pages/target --release
-        # this is 'like' copying the source into the container
+        cont=$(docker run -w /build $builder \
+          wasm-pack build --target web --out-dir gh-pages/target --release)
+        docker cp cont:/build/gh-pages .
 
     - name: Init new dummy repo for gh-pages
       run: |
-        cd gh-pages
+        #cd gh-pages
         git init         
         git config --local user.email "action@github.com" 
         git config --local user.name "GitHub Action"
         git add -A
-        git commit -m 'update gp-pages'
+        git commit -m 'gp-pages'
 
     - name: Force push to gh-pages branch
       # see https://medium.com/@danieljimgarcia/publishing-static-sites-to-github-pages-using-github-actions-8040f57dfeaf

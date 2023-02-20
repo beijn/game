@@ -1,2 +1,0 @@
-[toolchain]
-channel = "stable" #"nightly" # nightly disables caching as needs to rebuild every day

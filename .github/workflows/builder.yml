@@ -1,21 +1,24 @@
-name: builder
-on:
-  push:
-    branches: [ main ]
-env: 
-  target:  wasm32-unknown-unknown
-  imgbase: ghcr.io/beijn/game-builder
-
-jobs:
-  build-game-container:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - run: |
-        export BUILDER="${{env.imgbase}}:${{env.target}}"
-        echo ${{secrets.GITHUB_TOKEN}} | docker login ghcr.io -u ${{github.actor}} --password-stdin
-        export DOCKER_BUILDKIT=1 
-        docker pull $BUILDER || :
-        docker build . -t $BUILDER -f ./Dockerfile --cache-from $BUILDER --rm=false --build-arg TARGET=${{env.target}}
-        docker push $BUILDER
-
+# TODO disabled - migrate to actions detailed at 
+# https://docs.github.com/en/actions/publishing-packages/publishing-docker-images#publishing-images-to-github-packages
+# and then debug caching
+#
+# name: builder
+# on:
+#   push:
+#     branches: [ main ]
+# env: 
+#   target: wasm32-unknown-unknown
+#   imgbase: ghcr.io/beijn/game-builder
+#
+# jobs:
+#   build-game-container:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v3
+#     - run: |
+#         export BUILDER="${{env.imgbase}}:${{env.target}}"
+#         echo ${{secrets.GITHUB_TOKEN}} | docker login ghcr.io -u ${{github.actor}} --password-stdin
+#         docker pull $BUILDER || :
+#         DOCKER_BUILDKIT=1 docker build . -t $BUILDER --build-arg TARGET=${{env.target}} -f ./Dockerfile --cache-from $BUILDER --rm=false
+#         docker push $BUILDER
+#
