@@ -11,6 +11,6 @@ WORKDIR /build
 COPY Cargo.toml Cargo.lock ./
 RUN mkdir -p src && echo "fn main() {}" > src/lib.rs   # NOTE: later change lib.rs to main.rs (see Cargo.toml note)
 RUN cargo build --release --target ${TARGET}
-RUN rm -rf ./src/ target/${TARGET}/release{/deps,}/game*
+RUN rm -rf ./src/ $(echo target/${TARGET}/release{/deps,}/game*) ## Theres a bug with * in docker buildx - do I need to remove these or will they be overwritten in any case?
 COPY . .  
 

@@ -3,7 +3,7 @@ on:
   push:
     branches: [ main ]
 env: 
-  builder: ghcr.io/beijn/game-builder:wasm32-unknown-unknown
+  builder: ghcr.io/beijn/game:builder-wasm32-unknown-unknown  # keep synced with builder.yml
 jobs: 
   build:
     runs-on: ubuntu-latest
@@ -12,25 +12,21 @@ jobs:
     - name: Build and extract wasm packed for gh-pages from container
       run: |
         echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        cont=$(docker run -w /build $builder \
-          wasm-pack build --target web --out-dir gh-pages/target --release)
-        docker cp cont:/build/gh-pages .
+        docker run --name builder -w /build $builder wasm-pack build --target web --out-dir gh-pages --release --no-typescript
+        docker cp builder:/build/gh-pages .
 
     - name: Init new dummy repo for gh-pages
       run: |
-        #cd gh-pages
-        git init         
-        git config --local user.email "action@github.com" 
-        git config --local user.name "GitHub Action"
-        git add -A
-        git commit -m 'gp-pages'
+        cd gh-pages; git init
+        rm .gitignore README.md package.json  #took days to find this
+        git config --local user.email "action@github.com"; git config --local user.name "GitHub Action"
+        git add -A; git commit -m 'gp-pages'
 
+    # see https://medium.com/@danieljimgarcia/publishing-static-sites-to-github-pages-using-github-actions-8040f57dfeaf
     - name: Force push to gh-pages branch
-      # see https://medium.com/@danieljimgarcia/publishing-static-sites-to-github-pages-using-github-actions-8040f57dfeaf
       uses: ad-m/github-push-action@master
       with:
         force: true
         directory: ./gh-pages
         branch: gh-pages
-        github_token: ${{ secrets.GITHUB_TOKEN }}
 
