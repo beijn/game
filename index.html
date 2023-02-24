@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Demo</title>
+  </head>
+  <body>
+    <script type="module">
+      import init, { add } from './game.js';
+
+      async function run() {
+        var res = await init();
+        //res.start();
+
+        const result = add(1, 2);
+        console.log(`1 + 2 = ${result}`);
+        if (result !== 3)
+          throw new Error("wasm addition doesn't work!");
+        console.log('started');
+      }
+
+      run();
+    </script>
+  </body>
+</html>
