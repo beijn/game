@@ -3,8 +3,6 @@ name = "game"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 bevy = { version = "0.9" }#, features = ["dynamic"] } # NOTE NOTE feature dynamic increses compile time but doesnt work with web target → add back when deving on native
 # NOTE: for native wayland support later: features = ["wayland"]  [@https://bevy-cheatbook.github.io/platforms/linux.html]
@@ -17,29 +15,24 @@ resolver = "2" # Important! wgpu/Bevy needs this!
 
 # Enable a small amount of optimization in debug mode
 [profile.dev]
-opt-level = 1
+opt-level = 1  # Enable a small amount of optimization in debug mode
+debug = 0  # Disabling debug info speeds up builds a bunch set this to 1 or 2 to get more useful backtraces in debugger.
 
-# Enable high optimizations for dependencies (incl. Bevy), but not for our code:
 [profile.dev.package."*"]
-opt-level = 3
+opt-level = 3  # Enable high optimizations (only) for dependencies
 
 [profile.release]
 lto = "thin"
+#incremental = true  # make sure to benefit from this, because: longer compile time from scratch and less optimized result
+debug = 0
 
 #[toolchain]
-#channel = "nightly"
+#channel = "nightly"  # recommended for bevy but expensive
 
-
-# NOTE REMOVE when not explocitely using wasm interop? [@wasm-bindgen] → probable do multiple targets / crates, one of which is a wasm/js library for a website
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["cdylib"]  # see [@wasm-bindgen]; TODO: move to specific wasm lib target
 
+# REMOVE? from wasm-bindgen
 [dependencies.web-sys]
 version = "0.3.4"
-features = [
-  'Document',
-  'Element',
-  'HtmlElement',
-  'Node',
-  'Window',
-]
+features = ['Document', 'Element', 'HtmlElement', 'Node', 'Window']
