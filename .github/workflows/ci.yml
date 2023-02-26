@@ -42,16 +42,16 @@ jobs:
     - run: mv /build/target .  # IMPORTANT get the build cache (cause https://github.com/actions/checkout/pull/388)
     - name: Build for gh-pages
       run: |
-        wasm-pack build --target web --out-dir gh-pages --release --no-typescript
-        cd gh-pages && rm .gitignore README.md package.json
+        wasm-pack build --target web --out-dir dist/gh-pages --release --no-typescript
+        cd dist/gh-pages && rm .gitignore README.md package.json
     - uses: peaceiris/actions-gh-pages@v3
       with:
-        publish_dir: ./gh-pages
+        publish_dir: ./dist/gh-pages
         github_token: ${{ github.token }}
         force_orphan: true
 
-  # snok/container-retention-policy and gcr-cleaner did not work
-  clean-gcr:
+  
+  clean-gcr: # snok/container-retention-policy and gcr-cleaner did not work
     needs: builder
     runs-on: ubuntu-latest
     steps:

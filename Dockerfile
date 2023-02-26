@@ -1,6 +1,6 @@
 FROM rust:alpine AS builder
 ENV TARGET=wasm32-unknown-unknown
-RUN apk --no-cache add lld wasm-pack   git bash 
+RUN apk --no-cache add lld wasm-pack
 RUN rustup target add $TARGET
 WORKDIR /build
 COPY Cargo.toml Cargo.lock ./
